@@ -1,38 +1,128 @@
-# ORIGEN
+# ORIGEN AI
 
-MVP funcional para hackathon enfocado en turistas que visitan Mendoza y quieren descubrir, comprar y recibir vinos regionales sin cargar botellas durante todo el viaje.
+ORIGEN AI es una app para turistas que visitan Mendoza y quieren descubrir vinos, recibir recomendaciones inteligentes segun su pais destino, pagar de forma simple y con logica internacional inspirada en Stellar, comprar de forma simple y registrar compras premium onchain en BNB Chain.
 
-## Propuesta tecnica
+El MVP mantiene el foco en una sola categoria, un solo flujo de compra y una sola accion onchain defendible para hackathon:
 
-- Stack: Next.js App Router, React, TypeScript y Tailwind CSS.
-- Arquitectura: frontend-first con datos mock locales, estado de carrito en `localStorage` y cero dependencias de backend para la demo.
-- Objetivo: flujo completo de compra funcionando, UI premium accesible y narrativa blockchain modular sin sobreingenieria.
+- recomendacion inteligente segun contexto de viaje
+- narrativa de Stellar como capa de pagos simples e internacionales para turistas
+- sugerencia logistica visible
+- compra simple o premium segun perfil
+- registro onchain real de `ORIGEN PASS Reserve x10`
 
-## Que implementa realmente
+## Submission fit: BNB Chain - Next-Gen Consumer AI
 
-- Home / landing con propuesta de valor.
-- Catalogo de vinos con 6 productos mock.
-- Detalle de producto con resenas visibles.
+Este proyecto esta pensado para encajar con el track por tres motivos:
+
+1. Consumer AI visible:
+   `ORIGEN AI` adapta la experiencia segun pais destino, motivo de compra, tipo de compra y preferencia de vino.
+2. Real-world usefulness:
+   resuelve un problema turistico concreto: descubrir, comprar y recibir vinos sin cargar botellas durante todo el viaje.
+3. Real onchain proof:
+   la compra premium puede registrarse onchain en `BSC Testnet` con wallet, transaccion, hash y explorer link.
+
+## Que ya hace la app
+
+- Home elegante con propuesta de valor.
+- Catalogo de vinos mock.
+- Detalle de producto con resenas.
 - Carrito funcional.
-- Entrega con dos opciones: hotel o aeropuerto.
-- Checkout simulado.
-- Confirmacion de compra con orden mock.
-- Capa premium visible mediante `ORIGEN PASS Reserve x10`.
+- Entrega con dos opciones:
+  - `Hotel delivery`
+  - `Airport pickup`
+- Checkout.
+- Confirmacion de compra.
+- Capa premium `ORIGEN PASS Reserve x10`.
+- Asistente `ORIGEN AI` con impacto real en el flujo.
+- Registro premium onchain en BNB Testnet.
 
-## Que se mockea
+## Como funciona ORIGEN AI
 
-- Productos, bodegas, resenas, entrega y orden.
-- Pago inspirado en Stellar, pero simulado.
-- Beneficio premium Rootstock representado como narrativa de reserva digital y acceso.
-- BNB Chain, Hedera y Beexo Connect como capas futuras explicables en pitch.
+El usuario responde 4 preguntas:
 
-## Recomendacion blockchain realista
+- A que pais viaja
+- Si compra para regalo o consumo personal
+- Si prioriza compra simple o premium
+- Si prefiere tinto, blanco o espumante
 
-- Implementar de verdad solo una abstraccion de checkout liviano.
-- Simular Rootstock como componente premium defendible.
-- Mostrar BNB Chain, Hedera y Beexo Connect como roadmap modular, no como integraciones reales.
+Con eso, la app calcula:
 
-Eso mantiene el MVP demo-friendly, evita fragilidad tecnica y deja una historia clara de escalabilidad.
+- vino recomendado
+- modalidad de entrega sugerida
+- si conviene compra simple o premium
+- mensaje adaptado al pais destino
+
+Eso impacta de verdad en la UX:
+
+- el catalogo reordena el vino sugerido
+- el premium se destaca cuando conviene
+- entrega se preselecciona segun contexto
+- checkout recuerda la recomendacion aplicada
+
+## Accion onchain real
+
+La accion onchain esta concentrada en el producto premium:
+
+`ORIGEN PASS Reserve x10`
+
+Cuando el usuario llega al checkout con el pack premium:
+
+1. conecta MetaMask
+2. cambia a `BSC Testnet`
+3. registra la compra premium onchain
+4. obtiene hash verificable
+5. recien entonces finaliza la compra
+
+La confirmacion final muestra:
+
+- wallet
+- hash
+- link a BscScan
+- destino asociado a la compra premium
+
+## Capa de pagos: Stellar
+
+En la narrativa del producto, Stellar representa la capa de pagos simples e internacionales de ORIGEN.
+
+Eso es especialmente relevante para turistas porque permite explicar un checkout:
+
+- simple de usar
+- facil de entender
+- pensado para compras cross-border
+- alineado con una experiencia de viaje sin friccion
+
+En este MVP, Stellar no se integra onchain de forma real: se representa en el checkout y en la arquitectura conceptual como la capa ideal para pagos internacionales del lado turista.
+
+## Contrato
+
+Archivo:
+
+`contracts/OrigenPremiumRegistry.sol`
+
+El contrato guarda:
+
+- `buyer`
+- `packId`
+- `destinationCountry`
+- `benefitType`
+- `timestamp`
+
+Y emite:
+
+- `PremiumPurchaseRegistered`
+
+No hay token, NFT ni marketplace. Es un contrato minimo, suficiente y defendible para hackathon.
+
+## Stack
+
+- Next.js 15
+- React 19
+- TypeScript
+- Tailwind CSS
+- Ethers v6
+- Hardhat
+- datos mock locales
+- estado cliente con `localStorage`
 
 ## Estructura
 
@@ -48,75 +138,158 @@ app/
 components/
   sections/
   ui/
+contracts/
+  OrigenPremiumRegistry.sol
 data/
   wines.ts
 lib/
   cart-store.tsx
-  types.ts
-  utils.ts
+  travel-assistant.ts
+  origen-premium-abi.ts
+scripts/
+  deploy-origen-premium.js
+  register-premium-purchase.js
 ```
 
-## Desarrollo recomendado
+## Variables de entorno
 
-1. Base visual y layout.
-2. Datos mock y tipos.
-3. Catalogo y detalle de producto.
-4. Carrito y entrega.
-5. Checkout y confirmacion.
-6. Ajuste de copy demo y narrativa blockchain.
+Copiar `.env.example` a `.env.local` para frontend y a `.env` si queres usar scripts de Hardhat.
 
-## Lo que intencionalmente no hace
+Variables importantes:
 
-- Login real.
-- Backend o base de datos.
-- Pasarela bancaria real.
-- Resenas de usuarios reales.
-- Admin panel.
-- Stock conectado.
-- Logistica real.
+```bash
+NEXT_PUBLIC_BSC_TESTNET_RPC_URL=
+NEXT_PUBLIC_ORIGEN_PREMIUM_CONTRACT_ADDRESS=
+
+BSC_TESTNET_RPC_URL=
+BSC_TESTNET_PRIVATE_KEY=
+ORIGEN_PREMIUM_CONTRACT_ADDRESS=
+```
 
 ## Como correr el proyecto
 
-1. Instalar dependencias:
-
-```bash
-npm install
-```
-
-En PowerShell de Windows puede ser necesario usar:
-
 ```bash
 npm.cmd install
+npm.cmd run dev
 ```
 
-2. Levantar entorno local:
+Abrir:
+
+[http://localhost:3000](http://localhost:3000)
+
+## Comandos onchain
+
+Compilar contrato:
 
 ```bash
-npm run dev
+npm.cmd run chain:compile
 ```
 
-3. Abrir `http://localhost:3000`.
+Deploy en BSC Testnet:
 
-## UX copy clave
+```bash
+npm.cmd run chain:deploy:bsc-testnet
+```
 
-- Home: `Descubri y recibi vinos regionales sin complicaciones durante tu viaje.`
-- Catalogo: `Seleccion curada de vinos mendocinos`
-- Carrito vacio: `Tu seleccion aun esta vacia`
-- Entrega: `Elegi como queres recibir tu compra`
-- Checkout: `Finalizar compra`
-- Confirmacion: `Tu pedido ya esta listo para tu proxima parada`
+Registrar una compra premium desde script:
 
-## Demo flow sugerido
+```bash
+npm.cmd run chain:register:bsc-testnet
+```
 
-1. Mostrar home y propuesta de valor.
-2. Entrar al catalogo y remarcar seleccion curada.
-3. Abrir un vino y leer resenas de turistas.
-4. Agregar al carrito.
-5. Elegir entrega en hotel o aeropuerto.
-6. Confirmar compra en checkout.
-7. Mostrar confirmacion y numero de orden.
-8. Cerrar con `ORIGEN PASS Reserve x10` como capa premium tokenizable sin promesa financiera.
+## Flujo recomendado para demo
+
+1. Mostrar home.
+2. Abrir `ORIGEN AI`.
+3. Elegir un destino, por ejemplo `USA`.
+4. Mostrar como cambia la sugerencia:
+   - vino recomendado
+   - entrega sugerida
+   - compra premium recomendada
+5. Ir al catalogo y remarcar que el vino recomendado sube y queda destacado.
+6. Agregar `ORIGEN PASS Reserve x10`.
+7. Ir a checkout.
+8. Conectar MetaMask.
+9. Registrar compra premium en BSC Testnet.
+10. Mostrar hash.
+11. Finalizar compra.
+12. Mostrar confirmacion con prueba onchain.
+
+## Como hacer las 2 transacciones reales requeridas
+
+### Opcion A: desde la UI
+
+1. Deployar el contrato en `BSC Testnet`.
+2. Configurar `NEXT_PUBLIC_ORIGEN_PREMIUM_CONTRACT_ADDRESS`.
+3. Abrir la app desplegada.
+4. Hacer una compra premium con destino `USA`.
+5. Registrar la transaccion.
+6. Repetir con otro destino, por ejemplo `Brasil` o `Chile`.
+
+### Opcion B: desde script
+
+Con el contrato desplegado y el private key configurado:
+
+Primera tx:
+
+```bash
+$env:PREMIUM_DESTINATION_COUNTRY="USA"
+$env:PREMIUM_BENEFIT_TYPE="priority-access"
+npm.cmd run chain:register:bsc-testnet
+```
+
+Segunda tx:
+
+```bash
+$env:PREMIUM_DESTINATION_COUNTRY="Brasil"
+$env:PREMIUM_BENEFIT_TYPE="gift-priority"
+npm.cmd run chain:register:bsc-testnet
+```
+
+Guardar:
+
+- ambos tx hashes
+- screenshots de BscScan
+- address del contrato
+
+## Deploy sugerido
+
+### Frontend
+
+- Vercel
+
+### Contrato
+
+- BSC Testnet
+
+### Configuracion minima en Vercel
+
+- `NEXT_PUBLIC_BSC_TESTNET_RPC_URL`
+- `NEXT_PUBLIC_ORIGEN_PREMIUM_CONTRACT_ADDRESS`
+
+## Checklist DoraHacks
+
+- Demo desplegada
+- Repositorio publico
+- README claro
+- Video demo de 2 a 3 minutos
+- Contrato desplegado en BNB Chain
+- 2 transacciones exitosas dentro del periodo
+- Hashes y explorer links listos para mostrar
+- Mensaje claro:
+  `country-aware AI recommendation + onchain premium purchase registration`
+
+## Lo que intencionalmente no hace
+
+- login real
+- admin panel
+- stock real
+- pagos bancarios reales
+- reglas aduaneras reales
+- sistema legal o normativo
+- tokenizacion compleja
+- NFT complejo
 
 ## Mensaje de pitch
 
-ORIGEN transforma descubrimiento turistico en compra concreta. El MVP resuelve el flujo central hoy y deja una arquitectura modular para pagos, reputacion verificable y beneficios premium a futuro.
+ORIGEN AI transforma intencion turistica en compra concreta. Ayuda al viajero a elegir mejor segun su destino y registra compras premium verificables onchain en BNB Chain.

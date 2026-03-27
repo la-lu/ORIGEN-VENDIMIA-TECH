@@ -6,10 +6,13 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "chain:compile": "hardhat compile",
+    "chain:deploy:bsc-testnet": "hardhat run scripts/deploy-origen-premium.js --network bscTestnet",
+    "chain:register:bsc-testnet": "hardhat run scripts/register-premium-purchase.js --network bscTestnet"
   },
   "dependencies": {
-    "next": "15.2.4",
+    "next": "15.5.14",
     "react": "19.0.0",
     "react-dom": "19.0.0"
   },
@@ -18,6 +21,10 @@
     "@types/react": "19.0.10",
     "@types/react-dom": "19.0.4",
     "autoprefixer": "10.4.20",
+    "dotenv": "16.4.7",
+    "ethers": "6.13.5",
+    "hardhat": "2.24.3",
+    "@nomicfoundation/hardhat-ethers": "3.0.8",
     "postcss": "8.5.3",
     "tailwindcss": "3.4.17",
     "typescript": "5.8.2"
